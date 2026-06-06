@@ -1,19 +1,26 @@
 package data;
 
 public class User {
-    public Integer id;
-    public String name;
-    public String password;
+    private Long id;
+    private String name;
+    private String password;
 
-    public User(Integer id, String name, String password) {
+    public void setId(Long id) {
         this.id = id;
+    }
+    public Long getId() {
+        return id;
+    }
+    public void setName(String name) {
         this.name = name;
+    }
+    public String getName() {
+        return name;
+    }
+    public void setPassword(String password) {
         this.password = password;
     }
-
-    public User() {
-        id = 0;
-        name = "";
-        password = "";
+    public String getPassword() {
+        return password;
     }
 }

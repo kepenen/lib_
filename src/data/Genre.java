@@ -1,16 +1,20 @@
 package data;
 
 public class Genre {
-    public Integer id;
-    public String genre;
+    private Long id;
+    private String genre;
 
-    public Genre(Integer id, String genre) {
+    public void  setId(Long id) {
         this.id = id;
+    }
+    public Long getId() {
+        return id;
+    }
+    public void setGenre(String genre) {
         this.genre = genre;
     }
-
-    public Genre() {
-        id = 0;
-        genre = "NULL";
+    public String getGenre() {
+        return genre;
     }
+
 }

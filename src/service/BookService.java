@@ -5,8 +5,8 @@ import data.Book;
 import java.util.List;
 
 public interface BookService {
-    List<Book> selectByGenreID(Integer genre_id);
+    List<Book> selectByGenreID(Long genre_id);
     int insert(Book b);
-    int deleteBooks(int[] ids);
+    int deleteBooks(Long[] ids);
     int update(Book b);
 }

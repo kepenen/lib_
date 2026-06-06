@@ -2,54 +2,49 @@ package service.impl;
 
 import data.Genre;
 import service.GenreService;
-import service.sql.MySQLConnection;
+import dbframe.core.BaseQuery;
+import dbframe.core.SqlParam;
+import dbframe.handler.ListHandler;
+
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
-import java.sql.SQLException;
+public class GenreImpl implements GenreService {
+    private final BaseQuery base;
 
-public class GenreImpl extends MySQLConnection implements GenreService {
+    public GenreImpl() {
+        base = new BaseQuery();
+    }
+
     @Override
     public List<Genre> select() {
-        List<Genre> genres = new ArrayList<>();
-        try {
-            rs = stmt.executeQuery("SELECT * FROM genres");
-            while (rs.next()) {
-                genres.add(new Genre(rs.getInt("id"), rs.getString("genre")));
-            }
-            return genres;
-        } catch (SQLException e) {
-            showDialog(this.toString(), e);
-            return genres;
-        }
+        String sql = "select * from genres";
+        return base.query(sql, new ArrayList<>(), new ListHandler<>(Genre.class));
     }
 
+    @Override
     public int add(Genre g) {
-        String sql = "insert into genres(genre) values" + "('" + g.genre +"')";
-        try {
-            return stmt.executeUpdate(sql);
-        } catch (SQLException e) {
-            showDialog(this.toString(), e);
-            return 0;
-        }
+        String sql = "insert into genres(genre) values (?)";
+        List<SqlParam> params = new ArrayList<>();
+        params.add(new SqlParam(g.getGenre(), Types.VARCHAR));
+        return base.update(sql, params);
     }
 
+    @Override
     public int delete(Genre g) {
-        String sql = "delete from genres where id = " + "'" + g.id + "'";
-        try {
-            return stmt.executeUpdate(sql);
-        } catch (SQLException e) {
-            showDialog(this.toString(), e);
-            return 0;
-        }
+        String sql = "delete from genres where genre_id=?";
+        List<SqlParam> params = new ArrayList<>();
+        params.add(new SqlParam(g.getId(), Types.INTEGER));
+        return base.update(sql, params);
     }
+
+    @Override
     public int update(Genre g) {
-        String sql = "UPDATE genres SET genre='" + g.genre + "' WHERE id=" + g.id;
-        try {
-            return stmt.executeUpdate(sql);
-        } catch (SQLException e) {
-            showDialog(this.toString(), e);
-            return 0;
-        }
+        String sql = "update genres set genre=? WHERE id=?";
+        List<SqlParam> params = new ArrayList<>();
+        params.add(new SqlParam(g.getGenre(), Types.VARCHAR));
+        params.add(new SqlParam(g.getId(), Types.INTEGER));
+        return base.update(sql, params);
     }
 }

@@ -1,29 +1,27 @@
 package service.impl;
 
 import data.User;
-import service.sql.MySQLConnection;
 import service.UserService;
+import dbframe.core.BaseQuery;
+import dbframe.core.SqlParam;
+import dbframe.handler.BeanHandler;
 
-import java.sql.SQLException;
+import java.sql.Types;
+import java.util.ArrayList;
+import java.util.List;
 
-public class UserImpl extends MySQLConnection implements UserService {
+public class UserImpl implements UserService {
+    private final BaseQuery base;
+
+    public UserImpl() {
+        this.base = new BaseQuery();
+    }
+
     @Override
     public User selectByName(String name) {
-        String sql = "select * from users where name = '" + name + "'";
-        try {
-            rs = stmt.executeQuery(sql);
-
-            if (rs.next()) {
-                return new User(rs.getInt("id"),
-                        rs.getString("name"),
-                        rs.getString("password"));
-            } else {
-                return new User();
-            }
-
-        } catch (SQLException e) {
-            showDialog(this.toString(), e);
-            return new User();
-        }
+        String sql = "select * from users where name=?";
+        List<SqlParam> params = new ArrayList<>();
+        params.add(new SqlParam(name, Types.VARCHAR));
+        return base.query(sql, params, new BeanHandler<>(User.class));
     }
 }

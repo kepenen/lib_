@@ -133,13 +133,13 @@ public class BookWrapper {
 
     // 更新书籍数据
     private void refreshBooks() {
-        books = bookService.selectByGenreID(genres.get(categoryList.getSelectedIndex()).id);
+        books = bookService.selectByGenreID(genres.get(categoryList.getSelectedIndex()).getId());
         bookData = new Object[books.size()][columnNames.length];
         for (int i = 0; i < books.size(); i++) {
-            bookData[i][0] = books.get(i).title;
-            bookData[i][1] = books.get(i).author;
-            bookData[i][2] = books.get(i).isbn;
-            bookData[i][3] = books.get(i).num;
+            bookData[i][0] = books.get(i).getTitle();
+            bookData[i][1] = books.get(i).getAuthor();
+            bookData[i][2] = books.get(i).getIsbn();
+            bookData[i][3] = books.get(i).getNum();
         }
     }
 
@@ -148,7 +148,7 @@ public class BookWrapper {
         genres = genreService.select();
         categories = new String[genres.size()];
         for (int i = 0; i < genres.size(); i++) {
-            categories[i] = genres.get(i).genre;
+            categories[i] = genres.get(i).getGenre();
         }
     }
 
@@ -187,10 +187,10 @@ public class BookWrapper {
         if (tag == EDIT) {
             int n = dataTable.getSelectedRow();
             Book b = books.get(n);
-            fields[0].setText(b.title);
-            fields[1].setText(b.author);
-            fields[2].setText(b.isbn);
-            fields[3].setText(b.num.toString());
+            fields[0].setText(b.getTitle());
+            fields[1].setText(b.getAuthor());
+            fields[2].setText(b.getIsbn());
+            fields[3].setText(b.getNum().toString());
         }
         genre_combo.setSelectedIndex(genre_combo.getSelectedIndex());
 
@@ -259,11 +259,11 @@ public class BookWrapper {
             } else {
                 b = new Book();
             }
-            b.title = fields[0].getText().trim();
-            b.author = fields[1].getText().trim();
-            b.isbn = fields[2].getText().trim();
-            b.num = Integer.parseInt(fields[3].getText().trim());
-            b.genre_id = genres.get(genre_combo.getSelectedIndex()).id;
+            b.setTitle(fields[0].getText().trim());
+            b.setAuthor(fields[1].getText().trim());
+            b.setIsbn(fields[2].getText().trim());
+            b.setNum(Long.parseLong(fields[3].getText().trim()));
+            b.setGenre_id(genres.get(genre_combo.getSelectedIndex()).getId());
 
             if (tag == EDIT) {
                 bookService.update(b);
@@ -323,9 +323,9 @@ public class BookWrapper {
             return;
         }
         // 提取书籍id
-        int[] ids = new int[selectedRows.length];
+        Long[] ids = new Long[selectedRows.length];
         for (int i = 0; i < selectedRows.length; i++) {
-            ids[i] = books.get(selectedRows[i]).id;
+            ids[i] = books.get(selectedRows[i]).getId();
         }
         bookService.deleteBooks(ids);
         refreshTable();

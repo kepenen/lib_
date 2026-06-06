@@ -102,7 +102,7 @@ public class Login extends JFrame{
 
         User user = userService.selectByName(name);
 
-        if (user.id == null || !pwd.equals(user.password)) {
+        if (user.getId() == null || !pwd.equals(user.getPassword())) {
             JOptionPane.showMessageDialog(this, "账号或密码错误");
             return;
         }
