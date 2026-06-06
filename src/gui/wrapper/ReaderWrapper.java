@@ -5,6 +5,7 @@ import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
 
 import data.Reader;
+import gui.util.TextFieldListener;
 import service.ReaderService;
 import service.impl.ReaderImpl;
 
@@ -43,10 +44,10 @@ public class ReaderWrapper {
         readers = readerService.select();
         readerData = new Object[readers.size()][columnNames.length];
         for (int i = 0; i < readers.size(); i++) {
-            readerData[i][0] = readers.get(i).name;
-            readerData[i][1] = readers.get(i).stu_id;
-            readerData[i][2] = readers.get(i).stu_class;
-            readerData[i][3] = readers.get(i).phone;
+            readerData[i][0] = readers.get(i).getName();
+            readerData[i][1] = readers.get(i).getStu_id();
+            readerData[i][2] = readers.get(i).getStu_class();
+            readerData[i][3] = readers.get(i).getPhone();
         }
     }
 
@@ -79,7 +80,7 @@ public class ReaderWrapper {
         return panel;
     }
 
-    // 创建面板
+    // 创建列表面板
     private JPanel createCenterPanel() {
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBorder(BorderFactory.createTitledBorder("读者列表"));
@@ -97,7 +98,7 @@ public class ReaderWrapper {
         // 顶部按钮栏
         JPanel btnPanel = createButtonPanel();
         panel.setLayout(new BorderLayout());
-        panel.add(btnPanel, BorderLayout.NORTH);
+        panel.add(btnPanel, BorderLayout.SOUTH);
         panel.add(createCenterPanel(), BorderLayout.CENTER);
         refreshTable();
         return panel;
@@ -128,10 +129,10 @@ public class ReaderWrapper {
         if (tag == EDIT) {
             int n = dataTable.getSelectedRow();
             Reader reader = readers.get(n);
-            fields[0].setText(reader.name);
-            fields[1].setText(reader.stu_id);
-            fields[2].setText(reader.stu_class);
-            fields[3].setText(reader.phone);
+            fields[0].setText(reader.getName());
+            fields[1].setText(reader.getId().toString());
+            fields[2].setText(reader.getStu_class());
+            fields[3].setText(reader.getPhone());
         }
 
         // 按钮面板
@@ -144,7 +145,7 @@ public class ReaderWrapper {
         panel.setLayout(new GridLayout(6, 2, 5, 5));
 
         JDialog dialog = new JDialog(mainFrame, "信息填写", true); // true=模态弹窗(阻塞主窗口)
-        dialog.setSize(220,190);
+        dialog.setSize(220,170);
         dialog.setLocationRelativeTo(mainFrame); // 弹窗居中
 
         panel.add(lab_name);
@@ -163,6 +164,33 @@ public class ReaderWrapper {
         panel.add(btnCancel);
 
         dialog.add(panel);
+
+        TextFieldListener.addTextFieldListener(fields);
+
+        btnOk.addActionListener(ev -> {
+            Reader r;
+            if (tag == EDIT) {
+                r = readers.get(dataTable.getSelectedRow());
+            } else {
+                r = new  Reader();
+            }
+            r.setName(fields[0].getText());
+            r.setStu_id(fields[1].getText());
+            r.setStu_class(fields[2].getText());
+            r.setPhone(fields[3].getText());
+
+            if (tag == EDIT) {
+                readerService.update(r);
+            } else {
+                readerService.insert(r);
+            }
+            dialog.dispose(); // 关闭弹窗
+        });
+
+        // 取消关闭弹窗
+        btnCancel.addActionListener(ev-> dialog.dispose());
+
+        dialog.setVisible(true); // 显示弹窗
     }
 
     private void edit() {
@@ -175,12 +203,12 @@ public class ReaderWrapper {
             JOptionPane.showMessageDialog(mainFrame,"只能选择一条数据");
             return;
         }
-//        openEditForm(EDIT);
+        openEditForm(EDIT);
         refreshTable();
     }
 
     private void addRow() {
-//        openEditForm(ADD);
+        openEditForm(ADD);
         refreshTable();
     }
 
@@ -205,11 +233,11 @@ public class ReaderWrapper {
         }
 
         // 提取id
-        int[] ids = new int[selectedRows.length];
+        Long[] ids = new Long[selectedRows.length];
         for (int i = 0; i < selectedRows.length; i++) {
-            ids[i] = readers.get(selectedRows[i]).id;
+            ids[i] = readers.get(selectedRows[i]).getId();
         }
-//        readerService.deleteBooks(ids);
+        readerService.deleteReaders(ids);
         refreshTable();
     }
 }

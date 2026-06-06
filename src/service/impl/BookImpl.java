@@ -37,12 +37,7 @@ public class BookImpl implements BookService {
     @Override
     public int deleteBooks(Long[] ids) {
         StringBuilder sql = new StringBuilder("delete from books where id in (");
-        for (Long id : ids) {
-            sql.append("'").append(id).append("',");
-        }
-        sql.deleteCharAt(sql.length() - 1);
-        sql.append(")");
-        return base.update(sql.toString(), new ArrayList<>());
+        return ImplUtil.deleteIds(ids, sql, base);
     }
 
     @Override

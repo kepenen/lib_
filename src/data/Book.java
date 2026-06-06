@@ -8,6 +8,27 @@ public class Book {
     private Long num;
     private Long genre_id;
 
+    public Book(Long id, String title, String isbn, String author, Long num, Long genre_id) {
+        this.id = id;
+        this.title = title;
+        this.isbn = isbn;
+        this.author = author;
+        this.num = num;
+        this.genre_id = genre_id;
+    }
+
+    public Book(String title, String isbn, String author, Long num, Long genre_id) {
+        this.title = title;
+        this.isbn = isbn;
+        this.author = author;
+        this.num = num;
+        this.genre_id = genre_id;
+    }
+
+    public Book() {
+
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -43,26 +64,5 @@ public class Book {
     }
     public void setAuthor(String author) {
         this.author = author;
-    }
-
-    public Book(Long id, String title, String isbn, String author, Long num, Long genre_id) {
-        this.id = id;
-        this.title = title;
-        this.isbn = isbn;
-        this.author = author;
-        this.num = num;
-        this.genre_id = genre_id;
-    }
-
-    public Book(String title, String isbn, String author, Long num, Long genre_id) {
-        this.title = title;
-        this.isbn = isbn;
-        this.author = author;
-        this.num = num;
-        this.genre_id = genre_id;
-    }
-
-    public Book() {
-
     }
 }
