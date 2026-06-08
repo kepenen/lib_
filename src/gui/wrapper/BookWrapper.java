@@ -4,8 +4,6 @@ import data.Book;
 import data.Genre;
 import service.BookService;
 import service.GenreService;
-import service.impl.BookImpl;
-import service.impl.GenreImpl;
 import gui.util.TextFieldListener;
 
 import javax.swing.*;
@@ -44,8 +42,8 @@ public class BookWrapper {
 
     public BookWrapper(JFrame mainFrame) {
         this.mainFrame = mainFrame;
-        bookService = new BookImpl();
-        genreService = new GenreImpl();
+        bookService = new BookService();
+        genreService = new GenreService();
         this.mainPanel = createMainPanel();
     }
 

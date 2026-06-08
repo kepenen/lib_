@@ -4,8 +4,6 @@ import data.Reader;
 import data.User;
 import service.ReaderService;
 import service.UserService;
-import service.impl.ReaderImpl;
-import service.impl.UserImpl;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,8 +23,8 @@ public class Login extends JFrame{
 
     JPanel panel = new JPanel();
 
-    UserService userService = new UserImpl();
-    ReaderService readerService = new ReaderImpl();
+    UserService userService = new UserService();
+    ReaderService readerService = new ReaderService();
 
     public Login() {
         init();
@@ -135,7 +133,6 @@ public class Login extends JFrame{
         }
 
     }
-
 
     private void reset() {
         tf.setText("");

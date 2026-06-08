@@ -5,7 +5,6 @@ import javax.swing.table.DefaultTableModel;
 
 import data.Reader;
 import service.ReaderService;
-import service.impl.ReaderImpl;
 
 import java.awt.*;
 import java.util.List;
@@ -33,7 +32,7 @@ public class ReaderWrapper {
 
     public ReaderWrapper(JFrame mainFrame) {
         this.mainFrame = mainFrame;
-        readerService = new ReaderImpl();
+        readerService = new ReaderService();
         this.mainPanel = createMainPanel();
     }
 

@@ -3,7 +3,6 @@ package gui.wrapper;
 import data.Reader;
 import gui.util.TextFieldListener;
 import service.ReaderService;
-import service.impl.ReaderImpl;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -23,7 +22,7 @@ public class ReaderEditor {
      * */
     public ReaderEditor(JFrame mainFrame) {
         this.mainFrame = mainFrame;
-        readerService = new ReaderImpl();
+        readerService = new ReaderService();
         editForm();
     }
 
@@ -32,7 +31,7 @@ public class ReaderEditor {
      * */
     public ReaderEditor(JFrame mainFrame, Reader reader) {
         this.mainFrame = mainFrame;
-        readerService = new ReaderImpl();
+        readerService = new ReaderService();
         this.reader = reader;
         tag = EDIT;
         editForm();

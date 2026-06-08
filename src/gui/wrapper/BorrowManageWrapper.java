@@ -4,7 +4,6 @@ import data.Book;
 import data.Borrow;
 import data.Reader;
 import service.BorrowService;
-import service.impl.BorrowImpl;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -38,7 +37,7 @@ public class BorrowManageWrapper {
 
     public BorrowManageWrapper(JFrame mainFrame) {
         this.mainFrame = mainFrame;
-        borrowService = new BorrowImpl();
+        borrowService = new BorrowService();
         this.mainPanel = createMainPanel();
     }
 

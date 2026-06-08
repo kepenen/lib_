@@ -1,10 +1,10 @@
-package service.impl;
+package service;
 
 import dbframe.core.BaseQuery;
 
 import java.util.ArrayList;
 
-public class ImplUtil {
+public class Util {
     static int deleteIds(Long[] ids, StringBuilder sql, BaseQuery base) {
         for (Long id : ids) {
             sql.append("'").append(id).append("',");
