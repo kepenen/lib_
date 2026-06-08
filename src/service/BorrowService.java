@@ -11,4 +11,5 @@ public interface BorrowService {
     int delete(Borrow borrow);
     Borrow check(Borrow borrow);
     List<Book> selectBookByReaderId(Long readerId);
+    Long getCountByBookId(Long bookId);
 }
