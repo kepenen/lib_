@@ -20,10 +20,9 @@ public class BookImpl implements BookService {
     @Override
     public List<Book> selectByGenreID(Long genre_id) {
         // SELECT id, title, isbn, author, num, genre_id FROM books WHERE genre_id =?
-        String s = "select * from books where genre_id =?";
+        String s = "select id, title, isbn, author, num, genre_id, (select count(*) from borrow where books.id = borrow.book_id) as count_borrowed from books where genre_id =?";
         List<SqlParam> params = new ArrayList<>();
         params.add(new SqlParam(genre_id, Types.INTEGER));
-
         return base.query(s, params, new ListHandler<>(Book.class));
     }
 

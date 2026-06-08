@@ -7,28 +7,18 @@ public class Book {
     private String author;
     private Long num;
     private Long genre_id;
-
-    public Book(Long id, String title, String isbn, String author, Long num, Long genre_id) {
-        this.id = id;
-        this.title = title;
-        this.isbn = isbn;
-        this.author = author;
-        this.num = num;
-        this.genre_id = genre_id;
-    }
-
-    public Book(String title, String isbn, String author, Long num, Long genre_id) {
-        this.title = title;
-        this.isbn = isbn;
-        this.author = author;
-        this.num = num;
-        this.genre_id = genre_id;
-    }
+    private Long count_borrowed;
 
     public Book() {
 
     }
 
+    public void setCount_borrowed(Long count_borrowed) {
+        this.count_borrowed = count_borrowed;
+    }
+    public Long getCount_borrowed() {
+        return count_borrowed;
+    }
     public void setId(Long id) {
         this.id = id;
     }

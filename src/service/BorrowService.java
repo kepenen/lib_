@@ -12,4 +12,5 @@ public interface BorrowService {
     Borrow check(Borrow borrow);
     List<Book> selectBookByReaderId(Long readerId);
     Long getCountByBookId(Long bookId);
+    List<Reader> selectBorrowers();
 }

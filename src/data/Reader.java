@@ -9,19 +9,10 @@ public class Reader {
     private String stu_class;
     private String phone;
 
-    public Reader(Long id, String name, String stu_id, String stu_class, String phone, String username, String password) {
-        this.id = id;
-        this.name = name;
-        this.stu_id = stu_id;
-        this.stu_class = stu_class;
-        this.phone = phone;
-        this.username = username;
-        this.password = password;
-    }
-
     public Reader() {
 
     }
+
     public String getUsername() {
         return username;
     }

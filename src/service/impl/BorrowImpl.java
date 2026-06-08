@@ -2,10 +2,12 @@ package service.impl;
 
 import data.Book;
 import data.Borrow;
+import data.Reader;
 import dbframe.core.BaseQuery;
 import dbframe.core.SqlParam;
 import dbframe.handler.BeanHandler;
 import dbframe.handler.ListHandler;
+import dbframe.handler.ScalarHandler;
 import service.BorrowService;
 
 import java.sql.Types;
@@ -53,5 +55,20 @@ public class BorrowImpl implements BorrowService {
         params = new ArrayList<>();
         params.add(new SqlParam(readerId, Types.INTEGER));
         return base.query(sql, params, new ListHandler<>(Book.class));
+    }
+
+    @Override
+    public Long getCountByBookId(Long bookId) {
+        String sql = "select count(*) from borrow where book_id = ?";
+        params = new ArrayList<>();
+        params.add(new SqlParam(bookId, Types.INTEGER));
+        return base.query(sql, params, new ScalarHandler<Long>());
+    }
+
+    @Override
+    public List<Reader> selectBorrowers() {
+        String sql = "select * from readers where id in (select reader_id from borrow group by reader_id)";
+        params = new ArrayList<>();
+        return base.query(sql, params, new ListHandler<>(Reader.class));
     }
 }

@@ -4,6 +4,7 @@ import javax.swing.*;
 
 import gui.util.PageSwitcher;
 import gui.wrapper.BookWrapper;
+import gui.wrapper.BorrowManageWrapper;
 import gui.wrapper.ReaderWrapper;
 
 import java.awt.*;
@@ -22,6 +23,7 @@ public class MainFrame extends JFrame{
     // 封装面板
     BookWrapper bookWrapper;
     ReaderWrapper readerWrapper;
+    BorrowManageWrapper borrowManageWrapper;
 
     public MainFrame() {
         // 窗口配置
@@ -38,10 +40,12 @@ public class MainFrame extends JFrame{
         // 图书、读者面板
         bookWrapper = new BookWrapper(this);
         readerWrapper = new ReaderWrapper(this);
+        borrowManageWrapper = new BorrowManageWrapper(this);
 
         // 注册页面（key自定义）
         switcher.registerPage("book", bookWrapper.mainPanel);
         switcher.registerPage("reader", readerWrapper.mainPanel);
+        switcher.registerPage("borrow", borrowManageWrapper.mainPanel);
 
         // 默认展示图书页面
         switcher.switchTo("book");
@@ -55,7 +59,7 @@ public class MainFrame extends JFrame{
 
         mi1_1 = new JMenuItem("图书信息");
         mi1_2 = new JMenuItem("读者信息");
-        mi1_3 = new JMenuItem("学生");
+        mi1_3 = new JMenuItem("借书管理");
         m1.add(mi1_1);
         m1.add(mi1_2);
         m1.add(mi1_3);
@@ -65,8 +69,8 @@ public class MainFrame extends JFrame{
 
         mi1_1.addActionListener(e -> switcher.switchTo("book"));
         mi1_2.addActionListener(e -> switcher.switchTo("reader"));
+        mi1_3.addActionListener(e -> switcher.switchTo("borrow"));
     }
-
 }
 
 

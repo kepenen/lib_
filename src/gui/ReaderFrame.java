@@ -5,6 +5,7 @@ import javax.swing.*;
 import data.Reader;
 import gui.util.PageSwitcher;
 import gui.wrapper.BorrowWrapper;
+import gui.wrapper.ReaderEditor;
 import gui.wrapper.ReaderWrapper;
 import gui.wrapper.ReturnWrapper;
 
@@ -69,5 +70,6 @@ public class ReaderFrame extends JFrame {
             switcher.switchTo("return");
             returnWrapper.refreshBooks();
         });
+        mi1_3.addActionListener(e -> new ReaderEditor(this, reader));
     }
 }
