@@ -30,7 +30,7 @@ public class ReturnWrapper {
     // 表格列名
     private final String[] columnNames = {"书名", "作者", "ISBN", "数量"};
 
-    private Reader reader;
+    private final Reader reader;
 
     public ReturnWrapper(JFrame mainFrame, Reader reader) {
         this.mainFrame = mainFrame;
@@ -40,15 +40,23 @@ public class ReturnWrapper {
     }
 
     private void returnBook() {
+        // 获取所有选中的行下标
+        int[] selectedRows = dataTable.getSelectedRows();
+
+        // 判断是否选中行
+        if (selectedRows.length == 0) {
+            JOptionPane.showMessageDialog(mainFrame, "请先选中要还的书（Ctrl/Shift 多选）");
+            return;
+        }
+
         Borrow borrow = new Borrow();
         borrow.setReader_id(reader.getId());
-        borrow.setBook_id(books.get(dataTable.getSelectedRow()).getId());
-        if (1 == borrowService.delete(borrow)) {
-            JOptionPane.showMessageDialog(mainFrame, "还书成功！");
-            refreshBooks();
-        } else {
-            JOptionPane.showMessageDialog(mainFrame, "还书失败！");
+        for (int selectedRow : selectedRows) {
+            borrow.setBook_id(books.get(selectedRow).getId());
+            borrowService.delete(borrow);
         }
+        JOptionPane.showMessageDialog(mainFrame, "还书成功！");
+        refreshBooks();
     }
 
     // 更新书籍数据
@@ -76,7 +84,7 @@ public class ReturnWrapper {
         refreshBooks();
         return panel;
     }
-    // 按钮面板：借阅
+    // 按钮面板：还书
     private JPanel createButtonPanel() {
         JPanel panel = new JPanel();
         JButton btnEdit = new JButton("还书");

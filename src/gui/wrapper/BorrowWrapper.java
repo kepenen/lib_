@@ -22,9 +22,9 @@ public class BorrowWrapper {
     private final JFrame mainFrame;
 
     /*数据库处理服务*/
-    private BookService bookService;
-    private GenreService genreService;
-    private BorrowService borrowService;
+    private final BookService bookService;
+    private final GenreService genreService;
+    private final BorrowService borrowService;
 
     /*数据库资产*/
     private java.util.List<Genre> genres;
@@ -40,7 +40,7 @@ public class BorrowWrapper {
     private DefaultTableModel tableModel;
     // 表格列名
 //    private final String[] columnNames = {"书名", "作者", "ISBN", "数量", "剩余数量"};
-    private final String[] columnNames = {"书名", "作者", "ISBN", "数量"};
+    private final String[] columnNames = {"书名", "作者", "ISBN", "剩余库存", "是否已借阅"};
     // 当前选中的分类
     private String currentCategory;
 
@@ -75,13 +75,26 @@ public class BorrowWrapper {
         return panel;
     }
 
+    private Borrow checkBorrowed(Long reader_id, Long book_id) {
+        Borrow borrow = new Borrow();
+        borrow.setBook_id(book_id);
+        borrow.setReader_id(reader_id);
+        return borrowService.check(borrow);
+    }
+
     private void borrow() {
         Borrow borrow = new Borrow();
-        borrow.setBook_id(books.get(dataTable.getSelectedRow()).getId());
+        int r = dataTable.getSelectedRow();
+        if (r == -1) {
+            JOptionPane.showMessageDialog(mainFrame, "请选择要借阅的图书！");
+            return;
+        }
+        borrow.setBook_id(books.get(r).getId());
         borrow.setReader_id(reader.getId());
         Borrow check = borrowService.check(borrow);
         if (check == null) {
             borrowService.insert(borrow);
+            refreshTable();
         } else {
             JOptionPane.showMessageDialog(mainFrame, "您已经借阅有该书！");
         }
@@ -146,7 +159,12 @@ public class BorrowWrapper {
             bookData[i][0] = books.get(i).getTitle();
             bookData[i][1] = books.get(i).getAuthor();
             bookData[i][2] = books.get(i).getIsbn();
-            bookData[i][3] = books.get(i).getNum();
+            bookData[i][3] = books.get(i).getNum() - books.get(i).getCount_borrowed();
+            if (checkBorrowed(reader.getId(), books.get(i).getId()) == null){
+                bookData[i][4] = "否";
+            } else {
+                bookData[i][4] = "是";
+            }
         }
     }
 

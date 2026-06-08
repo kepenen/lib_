@@ -6,7 +6,6 @@ import data.Reader;
 import gui.util.PageSwitcher;
 import gui.wrapper.BorrowWrapper;
 import gui.wrapper.ReaderEditor;
-import gui.wrapper.ReaderWrapper;
 import gui.wrapper.ReturnWrapper;
 
 import java.awt.*;

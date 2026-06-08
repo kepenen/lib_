@@ -38,7 +38,7 @@ public class BookWrapper {
     private JTable dataTable;
     private DefaultTableModel tableModel;
     // 表格列名
-    private final String[] columnNames = {"书名", "作者", "ISBN", "数量"};
+    private final String[] columnNames = {"书名", "作者", "ISBN", "库存", "借阅数量"};
     // 当前选中的分类
     private String currentCategory;
 
@@ -139,6 +139,7 @@ public class BookWrapper {
             bookData[i][1] = books.get(i).getAuthor();
             bookData[i][2] = books.get(i).getIsbn();
             bookData[i][3] = books.get(i).getNum();
+            bookData[i][4] = books.get(i).getCount_borrowed();
         }
     }
 

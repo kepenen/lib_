@@ -1,11 +1,9 @@
 package gui.wrapper;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
 
 import data.Reader;
-import gui.util.TextFieldListener;
 import service.ReaderService;
 import service.impl.ReaderImpl;
 
@@ -105,93 +103,14 @@ public class ReaderWrapper {
         return panel;
     }
 
-    // 打开编辑表单
     private void openEditForm(int tag) {
-        JLabel lab_username, lab_name, lab_stu_id,lab_stu_class, lab_phone;
-        JLabel[] labels = new JLabel[6];
-        JTextField[] fields = new JTextField[6];
-
-        // 表单控件
-        labels[0] = new JLabel("用户名：");
-        labels[1] = new JLabel("密码：");
-        labels[2] = new JLabel("姓名：");
-        labels[3] = new JLabel("学号：");
-        labels[4] = new JLabel("班级：");
-        labels[5] = new JLabel("电话：");
-
-        Border border = BorderFactory.createEmptyBorder(0, 50, 0, 0);
-        for (JLabel label : labels) {
-            label.setBorder(border);
-        }
-        fields[0] = new JTextField();
-        fields[1] = new JTextField();
-        fields[2] = new JTextField();
-        fields[3] = new JTextField();
-        fields[4] = new JTextField();
-        fields[5] = new JTextField();
-
         if (tag == EDIT) {
             int n = dataTable.getSelectedRow();
             Reader reader = readers.get(n);
-            fields[0].setText(reader.getUsername());
-            fields[1].setText(reader.getPassword());
-            fields[2].setText(reader.getName());
-            fields[3].setText(reader.getId().toString());
-            fields[4].setText(reader.getStu_class());
-            fields[5].setText(reader.getPhone());
+            new ReaderEditor(mainFrame, reader);
+            return;
         }
-
-        // 按钮面板
-        JButton btnOk = new JButton("确定");
-        JButton btnCancel = new JButton("取消");
-
-        // 创建弹窗，依附主窗口
-        JPanel panel = new JPanel();
-        panel.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
-        panel.setLayout(new GridLayout(7, 2, 5, 5));
-
-        JDialog dialog = new JDialog(mainFrame, "信息填写", true); // true=模态弹窗(阻塞主窗口)
-        dialog.setSize(350,400);
-        dialog.setLocationRelativeTo(mainFrame); // 弹窗居中
-
-        for (int i = 0; i<6; i++) {
-            panel.add(labels[i]);
-            panel.add(fields[i]);
-        }
-
-        panel.add(btnOk);
-        panel.add(btnCancel);
-
-        dialog.add(panel);
-
-        TextFieldListener.addTextFieldListener(fields);
-
-        btnOk.addActionListener(ev -> {
-            Reader r;
-            if (tag == EDIT) {
-                r = readers.get(dataTable.getSelectedRow());
-            } else {
-                r = new  Reader();
-            }
-            r.setUsername(fields[0].getText());
-            r.setPassword(fields[1].getText());
-            r.setName(fields[2].getText());
-            r.setStu_id(fields[3].getText());
-            r.setStu_class(fields[4].getText());
-            r.setPhone(fields[5].getText());
-
-            if (tag == EDIT) {
-                readerService.update(r);
-            } else {
-                readerService.insert(r);
-            }
-            dialog.dispose(); // 关闭弹窗
-        });
-
-        // 取消关闭弹窗
-        btnCancel.addActionListener(ev-> dialog.dispose());
-
-        dialog.setVisible(true); // 显示弹窗
+        new ReaderEditor(mainFrame);
     }
 
     private void edit() {
