@@ -1,11 +1,9 @@
-package controller;
-
 import gui.Login;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class Test0 {
+public class Main {
     public static void main(String[] args) {
         // 全局统一字体、字号
         Font font = new Font("微软雅黑", Font.PLAIN, 20);

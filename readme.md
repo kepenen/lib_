@@ -13,7 +13,7 @@ Using Java to make a GUI isn't the mainstream, I have seen so many beautiful gam
 
 And the most interesting thing for me is to make a game engine--not just UI.
 
-I just have acquired a little knowledge of English, so I need to Learn More Thing About English 
+I just have acquired a little knowledge of English, so I need to Learn More Things About English 
 for there are so many books and documentations in English.
 
 Stop writing nonsense...
