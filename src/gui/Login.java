@@ -1,7 +1,10 @@
 package gui;
 
+import data.Reader;
 import data.User;
+import service.ReaderService;
 import service.UserService;
+import service.impl.ReaderImpl;
 import service.impl.UserImpl;
 
 import javax.swing.*;
@@ -15,15 +18,20 @@ public class Login extends JFrame{
     JTextField tf;
     JPasswordField pf;
     JButton btn_login, btn_reset;
+    // 单选按钮
+    JRadioButton rdoAdmin = new JRadioButton("管理员", true);
+    JRadioButton rdoReader = new JRadioButton("读者");
+    ButtonGroup group = new ButtonGroup();
 
     JPanel panel = new JPanel();
 
     UserService userService = new UserImpl();
+    ReaderService readerService = new ReaderImpl();
 
     public Login() {
         init();
         setLocation(100, 100);
-        setSize(450, 350);
+        setSize(450, 390);
         setVisible(true);
         setTitle("登录");
         setResizable(false);
@@ -50,15 +58,21 @@ public class Login extends JFrame{
         pf.setFont(font);
         btn_login.setFont(font);
         btn_reset.setFont(font);
+        rdoAdmin.setFont(font);
+        rdoReader.setFont(font);
 
+        group.add(rdoAdmin);
+        group.add(rdoReader);
 
         lab_title.setBounds(65, 30, 330, 50);
         lab_name.setBounds(55 , 110, 120, 40);
         lab_pwd.setBounds(55 , 170, 120, 40);
         tf.setBounds(195 , 110, 190, 40);
         pf.setBounds(195 , 170, 190, 40);
-        btn_login.setBounds(80 , 250, 120, 40);
-        btn_reset.setBounds(240 , 250, 120, 40);
+        rdoAdmin.setBounds(90 , 230, 120, 40);
+        rdoReader.setBounds(250 , 230, 120, 40);
+        btn_login.setBounds(80 , 280, 120, 40);
+        btn_reset.setBounds(240 , 280, 120, 40);
 
         add(panel);
         panel.add(lab_title);
@@ -68,6 +82,8 @@ public class Login extends JFrame{
         panel.add(pf);
         panel.add(btn_login);
         panel.add(btn_reset);
+        panel.add(rdoAdmin);
+        panel.add(rdoReader);
 
         btn_login.addActionListener(this::loginCheck);
         btn_reset.addActionListener(e -> reset());
@@ -100,16 +116,26 @@ public class Login extends JFrame{
         char[] chars = pf.getPassword();
         String pwd = String.copyValueOf(chars);
 
-        User user = userService.selectByName(name);
-
-        if (user.getId() == null || !pwd.equals(user.getPassword())) {
-            JOptionPane.showMessageDialog(this, "账号或密码错误");
-            return;
+        if (rdoAdmin.isSelected()) {
+            User user = userService.selectByName(name);
+            if (user == null || !pwd.equals(user.getPassword())) {
+                JOptionPane.showMessageDialog(this, "账号或密码错误");
+                return;
+            }
+            this.dispose();
+            new MainFrame().setVisible(true);
+        } else {
+            Reader reader = readerService.selectByUsername(name);
+            if (reader == null || !pwd.equals(reader.getPassword())) {
+                JOptionPane.showMessageDialog(this, "账号或密码错误");
+                return;
+            }
+            this.dispose();
+            new ReaderFrame(reader).setVisible(true);
         }
 
-        this.dispose();
-        new MainFrame().setVisible(true);
     }
+
 
     private void reset() {
         tf.setText("");

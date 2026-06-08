@@ -30,7 +30,7 @@ public class ReaderWrapper {
     private JTable dataTable;
     private DefaultTableModel tableModel;
     // 表格列名
-    private final String[] columnNames = {"姓名", "学号", "班级", "电话"};
+    private final String[] columnNames = {"用户名", "姓名", "学号", "班级", "电话"};
 
 
     public ReaderWrapper(JFrame mainFrame) {
@@ -44,10 +44,11 @@ public class ReaderWrapper {
         readers = readerService.select();
         readerData = new Object[readers.size()][columnNames.length];
         for (int i = 0; i < readers.size(); i++) {
-            readerData[i][0] = readers.get(i).getName();
-            readerData[i][1] = readers.get(i).getStu_id();
-            readerData[i][2] = readers.get(i).getStu_class();
-            readerData[i][3] = readers.get(i).getPhone();
+            readerData[i][0] = readers.get(i).getUsername();
+            readerData[i][1] = readers.get(i).getName();
+            readerData[i][2] = readers.get(i).getStu_id();
+            readerData[i][3] = readers.get(i).getStu_class();
+            readerData[i][4] = readers.get(i).getPhone();
         }
     }
 
@@ -106,33 +107,38 @@ public class ReaderWrapper {
 
     // 打开编辑表单
     private void openEditForm(int tag) {
-        JLabel lab_name, lab_stu_id,lab_stu_class, lab_phone;
-        JTextField[] fields = new JTextField[4];
+        JLabel lab_username, lab_name, lab_stu_id,lab_stu_class, lab_phone;
+        JLabel[] labels = new JLabel[6];
+        JTextField[] fields = new JTextField[6];
 
         // 表单控件
-        lab_name = new JLabel("姓名：");
-        lab_stu_id = new JLabel("学号");
-        lab_stu_class = new JLabel("班级：");
-        lab_phone = new JLabel("电话：");
+        labels[0] = new JLabel("用户名：");
+        labels[1] = new JLabel("密码：");
+        labels[2] = new JLabel("姓名：");
+        labels[3] = new JLabel("学号：");
+        labels[4] = new JLabel("班级：");
+        labels[5] = new JLabel("电话：");
 
-        Border border = BorderFactory.createEmptyBorder(0, 40, 0, 0);
-        lab_name.setBorder(border);
-        lab_stu_id.setBorder(border);
-        lab_stu_class.setBorder(border);
-        lab_phone.setBorder(border);
-
+        Border border = BorderFactory.createEmptyBorder(0, 50, 0, 0);
+        for (JLabel label : labels) {
+            label.setBorder(border);
+        }
         fields[0] = new JTextField();
         fields[1] = new JTextField();
         fields[2] = new JTextField();
         fields[3] = new JTextField();
+        fields[4] = new JTextField();
+        fields[5] = new JTextField();
 
         if (tag == EDIT) {
             int n = dataTable.getSelectedRow();
             Reader reader = readers.get(n);
-            fields[0].setText(reader.getName());
-            fields[1].setText(reader.getId().toString());
-            fields[2].setText(reader.getStu_class());
-            fields[3].setText(reader.getPhone());
+            fields[0].setText(reader.getUsername());
+            fields[1].setText(reader.getPassword());
+            fields[2].setText(reader.getName());
+            fields[3].setText(reader.getId().toString());
+            fields[4].setText(reader.getStu_class());
+            fields[5].setText(reader.getPhone());
         }
 
         // 按钮面板
@@ -142,23 +148,16 @@ public class ReaderWrapper {
         // 创建弹窗，依附主窗口
         JPanel panel = new JPanel();
         panel.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
-        panel.setLayout(new GridLayout(6, 2, 5, 5));
+        panel.setLayout(new GridLayout(7, 2, 5, 5));
 
         JDialog dialog = new JDialog(mainFrame, "信息填写", true); // true=模态弹窗(阻塞主窗口)
-        dialog.setSize(220,170);
+        dialog.setSize(350,400);
         dialog.setLocationRelativeTo(mainFrame); // 弹窗居中
 
-        panel.add(lab_name);
-        panel.add(fields[0]);
-
-        panel.add(lab_stu_id);
-        panel.add(fields[1]);
-
-        panel.add(lab_stu_class);
-        panel.add(fields[2]);
-
-        panel.add(lab_phone);
-        panel.add(fields[3]);
+        for (int i = 0; i<6; i++) {
+            panel.add(labels[i]);
+            panel.add(fields[i]);
+        }
 
         panel.add(btnOk);
         panel.add(btnCancel);
@@ -174,10 +173,12 @@ public class ReaderWrapper {
             } else {
                 r = new  Reader();
             }
-            r.setName(fields[0].getText());
-            r.setStu_id(fields[1].getText());
-            r.setStu_class(fields[2].getText());
-            r.setPhone(fields[3].getText());
+            r.setUsername(fields[0].getText());
+            r.setPassword(fields[1].getText());
+            r.setName(fields[2].getText());
+            r.setStu_id(fields[3].getText());
+            r.setStu_class(fields[4].getText());
+            r.setPhone(fields[5].getText());
 
             if (tag == EDIT) {
                 readerService.update(r);

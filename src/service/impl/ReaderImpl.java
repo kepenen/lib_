@@ -3,6 +3,7 @@ package service.impl;
 import data.Reader;
 import dbframe.core.BaseQuery;
 import dbframe.core.SqlParam;
+import dbframe.handler.BeanHandler;
 import dbframe.handler.ListHandler;
 import service.ReaderService;
 
@@ -28,13 +29,13 @@ public class ReaderImpl implements ReaderService {
     }
     @Override
     public int insert(Reader reader) {
-        String sql = "insert into readers(name, stu_id, stu_class, phone) values(?,?,?,?)";
+        String sql = "insert into readers(username, password, name, stu_id, stu_class, phone) values(?,?,?,?,?,?)";
         setParamsNoId(reader);
         return base.update(sql, params);
     }
     @Override
     public int update(Reader reader) {
-        String sql = "update readers set  name = ?, stu_id = ?, stu_class = ?, phone = ? where id = ?";
+        String sql = "update readers set username=?, password=?, name = ?, stu_id = ?, stu_class = ?, phone = ? where id = ?";
         setParamsNoId(reader);
         params.add(new SqlParam(reader.getId(), Types.VARCHAR));
         return base.update(sql, params);
@@ -47,10 +48,18 @@ public class ReaderImpl implements ReaderService {
 
     private void setParamsNoId(Reader reader) {
         params = new ArrayList<>();
+        params.add(new SqlParam(reader.getUsername(), Types.VARCHAR));
+        params.add(new SqlParam(reader.getPassword(), Types.VARCHAR));
         params.add(new SqlParam(reader.getName(), Types.VARCHAR));
         params.add(new SqlParam(reader.getStu_id(), Types.VARCHAR));
         params.add(new SqlParam(reader.getStu_class(), Types.VARCHAR));
         params.add(new SqlParam(reader.getPhone(), Types.VARCHAR));
+    }
+    public Reader selectByUsername(String username) {
+        String sql = "select * from readers where username = ?";
+        params = new ArrayList<>();
+        params.add(new SqlParam(username, Types.VARCHAR));
+        return base.query(sql, params, new BeanHandler<>(Reader.class));
     }
 
 }

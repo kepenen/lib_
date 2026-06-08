@@ -69,7 +69,7 @@ public class BookWrapper {
         return panel;
     }
 
-    // 顶部按钮面板：修改、添加、删除
+    // 按钮面板：修改、添加、删除
     private JPanel createButtonPanel() {
         JPanel panel = new JPanel();
         panel.setBorder(BorderFactory.createEmptyBorder(8, 10, 8, 10));
@@ -166,12 +166,12 @@ public class BookWrapper {
 
         // 表单控件
         lab_title = new JLabel("标题：");
-        lab_author = new JLabel("作者");
+        lab_author = new JLabel("作者：");
         lab_isbn = new JLabel("ISBN：");
         lab_num = new JLabel("数量：");
-        lab_genre = new JLabel(" 类型：");
+        lab_genre = new JLabel("类型：");
 
-        Border border = BorderFactory.createEmptyBorder(0, 40, 0, 0);
+        Border border = BorderFactory.createEmptyBorder(0, 70, 0, 0);
         lab_title.setBorder(border);
         lab_author.setBorder(border);
         lab_isbn.setBorder(border);
@@ -191,7 +191,7 @@ public class BookWrapper {
             fields[2].setText(b.getIsbn());
             fields[3].setText(b.getNum().toString());
         }
-        genre_combo.setSelectedIndex(genre_combo.getSelectedIndex());
+        genre_combo.setSelectedIndex(categoryList.getSelectedIndex());
 
         // 按钮面板
         JButton btnOk = new JButton("确定");
@@ -203,7 +203,7 @@ public class BookWrapper {
         panel.setLayout(new GridLayout(6, 2, 5, 5));
 
         JDialog dialog = new JDialog(mainFrame, "信息填写", true); // true=模态弹窗(阻塞主窗口)
-        dialog.setSize(220,190);
+        dialog.setSize(400,250);
         dialog.setLocationRelativeTo(mainFrame); // 弹窗居中
 
         panel.add(lab_title);

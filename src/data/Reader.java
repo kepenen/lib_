@@ -2,23 +2,38 @@ package data;
 
 public class Reader {
     private Long id;
+    private String username;
+    private String password;
     private String name;
     private String stu_id;
     private String stu_class;
     private String phone;
 
-    public Reader(Long id, String name, String stu_id, String stu_class, String phone) {
+    public Reader(Long id, String name, String stu_id, String stu_class, String phone, String username, String password) {
         this.id = id;
         this.name = name;
         this.stu_id = stu_id;
         this.stu_class = stu_class;
         this.phone = phone;
+        this.username = username;
+        this.password = password;
     }
 
     public Reader() {
 
     }
-
+    public String getUsername() {
+        return username;
+    }
+    public void setUsername(String username) {
+        this.username = username;
+    }
+    public String getPassword() {
+        return password;
+    }
+    public void setPassword(String password) {
+        this.password = password;
+    }
     public Long getId() {
         return id;
     }

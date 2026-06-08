@@ -10,4 +10,5 @@ public interface ReaderService {
     int insert(Reader reader);
     int update(Reader reader);
     int deleteReaders(Long[] ids);
+    Reader selectByUsername(String username);
 }
