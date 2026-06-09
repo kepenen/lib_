@@ -7,17 +7,17 @@ CREATE TABLE `books` (
   `genre_id` int unsigned DEFAULT NULL COMMENT '分类ID',
   PRIMARY KEY (`id`),
   UNIQUE KEY `title` (`title`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='书表';
+) COMMENT='书表';
 
 INSERT INTO `books` VALUES (5,'深入理解计算机系统','3414','大卫',5,3),(7,'三体I','123-34','刘慈欣',999,2),(8,'计算机系统','无','87-09',9,1),(9,'么么哒','877-345','无',8,2),(10,'bojack horsman','2342-344','bojack',9,1),(11,'coffee','23124','hu',555,2);
 
 
-CREATE TABLE `borrowers` (
+CREATE TABLE `borrow` (
   `id` int unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID, 主键',
   `reader_id` int unsigned DEFAULT NULL COMMENT '读者ID',
   `book_id` int unsigned DEFAULT NULL COMMENT '书籍ID',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='借书信息';
+) COMMENT='借书信息';
 
 
 CREATE TABLE `genres` (
@@ -39,7 +39,7 @@ CREATE TABLE `readers` (
   `stu_class` varchar(25) DEFAULT NULL COMMENT '班级',
   `phone` varchar(25) DEFAULT NULL COMMENT '电话',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='读者信息';
+) COMMENT='读者信息';
 INSERT INTO `readers` VALUES (1,'abc','123','druhu','213234','cs','110');
 
 
@@ -50,5 +50,5 @@ CREATE TABLE `users` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`),
   UNIQUE KEY `password` (`password`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='用户表';
+) COMMENT='用户表';
 INSERT INTO `users` VALUES (1,'kepen','abcd'),(2,'liu','1234');
