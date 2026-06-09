@@ -99,15 +99,20 @@ public class BorrowWrapper {
             JOptionPane.showMessageDialog(mainFrame, "您已经借阅有该书！");
         }
     }
-    // 按钮面板：借阅
+    // 按钮面板：借阅 刷新
     private JPanel createButtonPanel() {
         JPanel panel = new JPanel();
+        panel.setBorder(BorderFactory.createEmptyBorder(8, 10, 8, 10));
         JButton btnEdit = new JButton("借阅");
+        JButton btnRefresh = new JButton("刷新");
 
         // 修改按钮事件
         btnEdit.addActionListener(e -> borrow());
+        btnRefresh.addActionListener(e -> refreshTable());
 
         panel.add(btnEdit);
+        panel.add(Box.createHorizontalStrut(20));
+        panel.add(btnRefresh);
         return panel;
     }
 
