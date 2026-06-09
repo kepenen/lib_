@@ -1,19 +1,39 @@
 # 图书管理系统
-- 这是一个使用Java Swing写的UI（java课试验报告）
-- 它能干什么？我不知道
+> 这是一个使用Java Swing写的UI
+> 
+## 功能
+- **管理员：**三个管理界面
+  - 图书数据管理（含分类栏）
+  - 读者信息管理
+  - 还书管理（含读者栏）
 
-## 项目感受
-因为之前用过spring，就把框架写成这样了（接口不是这么用的，但是看着舒服），这文件数量——很多，主要是要基于JDBC写，就多了数据库框架
+- **读者：**两个界面
+  - 借书（含分类栏）
+  - 还书
 
-让ai写了一个数据库查询框架，没有框架浑身难受，也不想写复杂了，再写就把Mybatis写出来了
+## 项目结构
 
-I am so tired with it, I have a lot of thing to do, I have English, Computer Graphic, Computer Vision etc. to learn.
+```
+/
+├── src/              
+    ├── data/        # 数据实体
+    │   └── ...
+    ├── dbframe/     # 数据库框架
+    │   └── ...
+    ├── gui/
+    │   ├── util/       # 面板切换、输入框切换工具
+    │       └── ...
+    │   ├── wrapper/    # 封装的面板
+    │   ├── Login.java  # 登录窗口
+    │   ├── MainFrame   # 管理员专用窗口
+    │   └── ReaderFrame # 读者专用窗口
+    └──service/   # 数据库业务逻辑
+        └── ...
+```
 
-Using Java to make a GUI isn't the mainstream, I have seen so many beautiful game UI, and most of them was produced by C++.
+## 配置
+需要的库已经放在`lib`文件夹，配置好，直接编译就得
 
-And the most interesting thing for me is to make a game engine--not just UI.
-
-I just have acquired a little knowledge of English, so I need to Learn More Things About English 
-for there are so many books and documentations in English.
-
-Stop writing nonsense...
+## 小声BB
+实在没什么经验，感觉这还是有些`没有实感`，果然还是多看**别人的**项目了，What's the point?
+用AI写的数据库框架，怎么写UI，AI也是非常懂的。我不知道，这个Java Swing有些古老，没有现代UI的那样好看，果然还是需要**多学C++**
