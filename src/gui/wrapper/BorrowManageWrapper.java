@@ -133,7 +133,12 @@ public class BorrowManageWrapper {
 
     // 更新书籍数据
     private void refreshBooks() {
-        books = borrowService.selectBookByReaderId(borrowers.get(categoryList.getSelectedIndex()).getId());
+        int n = categoryList.getSelectedIndex();
+        if (n == -1) {
+            tableModel.setDataVector(new Object[][]{}, columnNames);
+            return;
+        }
+        books = borrowService.selectBookByReaderId(borrowers.get(n).getId());
         bookData = new Object[books.size()][columnNames.length];
         for (int i = 0; i < books.size(); i++) {
             bookData[i][0] = books.get(i).getTitle();
