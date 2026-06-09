@@ -40,7 +40,7 @@ CREATE TABLE `readers` (
   `phone` varchar(25) DEFAULT NULL COMMENT '电话',
   PRIMARY KEY (`id`)
 ) COMMENT='读者信息';
-INSERT INTO `readers` VALUES (1,'abc','123','druhu','213234','cs','110');
+INSERT INTO `readers` VALUES (1,'abc','123','jakie','110','cs','666');
 
 
 CREATE TABLE `users` (
@@ -51,4 +51,4 @@ CREATE TABLE `users` (
   UNIQUE KEY `name` (`name`),
   UNIQUE KEY `password` (`password`)
 ) COMMENT='用户表';
-INSERT INTO `users` VALUES (1,'kepen','abcd'),(2,'liu','1234');
+INSERT INTO `users` VALUES (1,'admin','1234');
